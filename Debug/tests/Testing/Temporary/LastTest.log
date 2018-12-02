@@ -1,21 +1,21 @@
-Start testing: Nov 23 19:34 CET
+Start testing: Nov 29 15:18 CET
 ----------------------------------------------------------
 1/1 Testing: boostUnitTestsRun
 1/1 Test: boostUnitTestsRun
 Command: "/home/jaro/Desktop/Mapy/Debug/tests/aisdiMapsTests"
 Directory: /home/jaro/Desktop/Mapy/Debug/tests
-"boostUnitTestsRun" start time: Nov 23 19:34 CET
+"boostUnitTestsRun" start time: Nov 29 15:18 CET
 Output:
 ----------------------------------------------------------
 Running 294 test cases...
 
 *** No errors detected
 <end of output>
-Test time =   0.04 sec
+Test time =   0.05 sec
 ----------------------------------------------------------
 Test Passed.
-"boostUnitTestsRun" end time: Nov 23 19:34 CET
+"boostUnitTestsRun" end time: Nov 29 15:18 CET
 "boostUnitTestsRun" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Nov 23 19:34 CET
+End testing: Nov 29 15:18 CET

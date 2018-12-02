@@ -22,6 +22,35 @@ class TreeMap
         using size_type = std::size_t;
 
         Node(key_type key, mapped_type value) : pair(key, value) {}
+        /*Node(const Node& other) : pair(other.pair.first, other.pair.second), height(other.height)
+        {
+            if(other.leftChild){
+                leftChild = new Node();
+                *leftChild = *other.leftChild;
+                leftChild->parent = this;
+            }
+            if(other.rightChild){
+                rightChild->parent = this;
+                *rightChild = *other.rightChild;
+                rightChild = other.rightChild;
+            }
+
+        }
+        
+        operator = (const Node& other) : pair(other.pair.first, other.pair.second), height(other.height)
+        {
+            if(other.leftChild){
+                leftChild = new Node();
+                *leftChild = *other.leftChild;
+                leftChild->parent = this;
+            }
+            if(other.rightChild){
+                rightChild->parent = this;
+                *rightChild = *other.rightChild;
+                rightChild = other.rightChild;
+            }
+
+        }*/
         ~Node()
         {
             delete leftChild;
@@ -112,13 +141,8 @@ class TreeMap
         Node *succesor() const
         {
             if (hasRightChild())
-            {
-                auto current = rightChild;
-                while (current->leftChild)
-                    current = current->leftChild;
-
-                return current;
-            }
+                return rightChild->min();
+            
 
             auto current = this;
             while (current->parent != nullptr &&
@@ -131,13 +155,8 @@ class TreeMap
         Node *predecesor() const
         {
             if (hasLeftChild())
-            {
-                auto current = leftChild;
-                while (current->leftChild)
-                    current = current->leftChild;
-
-                return current;
-            }
+                return leftChild->max();
+            
 
             auto current = this;
             while (current->parent != nullptr &&
@@ -152,6 +171,20 @@ class TreeMap
             size_t left = leftChild ? leftChild->height : 0;
             size_t right = rightChild ? rightChild->height : 0;
             height = 1 + std::max(left, right);
+        }
+        
+        Node* min()
+        {
+            if(hasLeftChild())
+                return leftChild->min();
+            return this;
+        }
+        
+        Node* max()
+        {
+            if(hasRightChild())
+                return rightChild->min();
+            return this;
         }
 
         bool hasLeftChild() const { return leftChild != nullptr; }
@@ -192,7 +225,7 @@ class TreeMap
       public:
         using key_type = KeyType;
         using mapped_type = ValueType;
-        using value_type = std::pair<const key_type, mapped_type>;
+        using value_type = std::pair<key_type, mapped_type>;
         using size_type = std::size_t;
 
         AVLTree() : root(nullptr) {}
@@ -201,12 +234,15 @@ class TreeMap
             if (!other.root)
                 return;
 
+            /*root = new Node();
+            *(root) = *(other.root);*/
             Node *n = other.minNode();
             while (n != nullptr)
             {
                 insert(n->pair);
                 n = n->succesor();
             }
+
         }
         AVLTree(AVLTree &&other) : root(nullptr) { std::swap(root, other.root); }
         AVLTree &operator=(const AVLTree &other)
@@ -283,26 +319,19 @@ class TreeMap
             if (root == nullptr)
                 return nullptr;
 
-            Node *node = root->find(key);
-            return node;
+            return root->find(key);
+             
         }
 
         Node *minNode() const
         {
-            auto current = root;
-            while (current && current->leftChild)
-                current = current->leftChild;
-
-            return current;
+            
+            return root ? root->min() : root;
         }
 
         Node *maxNode() const
         {
-            auto current = root;
-            while (current && current->rightChild)
-                current = current->rightChild;
-
-            return current;
+            return root ? root->max() : root;
         }
 
         mapped_type &get(key_type key) const
@@ -330,6 +359,7 @@ class TreeMap
 
       private:
         Node *root = nullptr;
+      //  void copy
 
         void rebalance(Node *insertedNode)
         {
@@ -415,6 +445,8 @@ class TreeMap
             node->updateHeight();
             temp->updateHeight();
         }
+        
+        
     };
 
   public:
