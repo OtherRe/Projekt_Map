@@ -57,7 +57,7 @@ public:
     if (it == list.end())
     {
       list.emplace_back(key, ValueType{});
-      if (++size >= buckets)
+      if (++size >= buckets * 10 / 9)
       {
         doubleCapacity();
         return valueOf(key);

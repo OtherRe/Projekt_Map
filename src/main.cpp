@@ -75,7 +75,7 @@ int main(int argc, char **argv)
       doAction(count, aisdi::TreeMap<int, int>{tm}, [](aisdi::TreeMap<int, int> &map, int i) {
         map.remove(i);
       }); });
-
+  
   auto hashFind = measureTime([&] {
       doAction(count, aisdi::HashMap<int, int>{hm}, [](aisdi::HashMap<int, int> &map, int i) {
         map.find(i);
